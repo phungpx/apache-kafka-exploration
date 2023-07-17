@@ -85,14 +85,14 @@ async def send_message(message: MessageDto):
         producer.poll(0)
         logger.logInfo(f'Produced message: key={record_key}, value={record_value}.')
         return JSONResponse({
-            "statusText" : "Message Delivery Complete",
+            "statusMessage" : "Message Delivery Complete",
             "statusCode" : status.HTTP_200_OK,
             "message" : message.__dict__,
         })
     except Exception as error:
         logger.logError(f'Producing record failed! with error: {error}')
         return JSONResponse({
-            "statusText" : "Producing record failed!",
+            "statusMessage" : "Producing record failed!",
             "statusCode" : status.HTTP_500_INTERNAL_SERVER_ERROR,
             "errorMessage": error,
         })

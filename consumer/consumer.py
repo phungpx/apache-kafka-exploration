@@ -34,7 +34,7 @@ while True:
             record_value: str = StringDeserializer()(msg.value())  # <=> decode('utf-8')
             logger.logInfo(f"Message Info: topic {msg.topic()} - partition [{msg.partition()}] @ offset {msg.offset()}")
             logger.logInfo(f"Received message: key={record_key} & value={record_value}")
-            time.sleep(Config.SLEEP_TIME)
+            time.sleep(int(Config.SLEEP_TIME))
 
     except KeyboardInterrupt:
         break

@@ -31,25 +31,6 @@ services:
     networks:
       - kafka-net
 
-  # control-center:
-  #   image: confluentinc/cp-control-center
-  #   container_name: control-center
-  #   ports:
-  #     - "9021:9021"
-  #   restart: always
-  #   environment:
-  #     CONTROL_CENTER_BOOTSTRAP_SERVERS: kafka:9092
-  #     CONTROL_CENTER_REPLICATION_FACTOR: 1
-  #     PORT: 9021
-  #   depends_on:
-  #     - zookeeper
-  #     - kafka
-  #   volumes:
-  #     - /tmp/control-center/data:/var/lib/confluent-control-center
-  #     - /tmp/control-center/logs:/var/log/confluent-control-center
-  #   networks:
-  #     - kafka-net
-
   kafka-ui:
     container_name: kafka-ui
     image: provectuslabs/kafka-ui:latest

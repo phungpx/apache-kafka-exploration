@@ -17,7 +17,7 @@ services:
       KAFKA_TOPIC_PARTITIONS: 3
       KAFKA_REPLICATION_FACTOR: 1
     networks:
-      -  kafka_kafka-net
+      -  confluent-kafka-practice_kafka-net
 
   consumer1:
     container_name: consumer1
@@ -32,8 +32,9 @@ services:
       KAFKA_SERVERS: kafka:9092
       KAFKA_TOPIC: my-topic
       KAFKA_CONSUMER_GROUP_ID: my-consumer-group-1
+      SLEEP_TIME: 1
     networks:
-      -  kafka_kafka-net
+      -  confluent-kafka-practice_kafka-net
 
   consumer2:
     container_name: consumer2
@@ -48,8 +49,9 @@ services:
       KAFKA_SERVERS: kafka:9092
       KAFKA_TOPIC: my-topic
       KAFKA_CONSUMER_GROUP_ID: my-consumer-group-1
+      SLEEP_TIME: 1
     networks:
-      -  kafka_kafka-net
+      -  confluent-kafka-practice_kafka-net
   
   consumer3:
     container_name: consumer3
@@ -64,8 +66,9 @@ services:
       KAFKA_SERVERS: kafka:9092
       KAFKA_TOPIC: my-topic
       KAFKA_CONSUMER_GROUP_ID: my-consumer-group-1
+      SLEEP_TIME: 1
     networks:
-      -  kafka_kafka-net
+      -  confluent-kafka-practice_kafka-net
 
   consumer4:
     container_name: consumer4
@@ -80,9 +83,10 @@ services:
       KAFKA_SERVERS: kafka:9092
       KAFKA_TOPIC: my-topic
       KAFKA_CONSUMER_GROUP_ID: my-consumer-group-2
+      SLEEP_TIME: 5
     networks:
-      -  kafka_kafka-net
+      -  confluent-kafka-practice_kafka-net
 
 networks:
-  kafka_kafka-net:
+  confluent-kafka-practice_kafka-net:
     external: true

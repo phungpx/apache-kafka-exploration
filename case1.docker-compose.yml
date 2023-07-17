@@ -17,7 +17,7 @@ services:
       KAFKA_TOPIC_PARTITIONS: 2
       KAFKA_REPLICATION_FACTOR: 1
     networks:
-      - kafka_kafka-net
+      - confluent-kafka-practice_kafka-net
 
   consumer1:
     container_name: consumer1
@@ -33,7 +33,7 @@ services:
       KAFKA_TOPIC: my-topic
       KAFKA_CONSUMER_GROUP_ID: my-consumer-group-1
     networks:
-      - kafka_kafka-net
+      - confluent-kafka-practice_kafka-net
 
   consumer2:
     container_name: consumer2
@@ -49,8 +49,8 @@ services:
       KAFKA_TOPIC: my-topic
       KAFKA_CONSUMER_GROUP_ID: my-consumer-group-1
     networks:
-      - kafka_kafka-net
+      - confluent-kafka-practice_kafka-net
 
 networks:
-  kafka_kafka-net:
+  confluent-kafka-practice_kafka-net:
     external: true
