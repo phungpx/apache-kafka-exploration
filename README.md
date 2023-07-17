@@ -1,4 +1,6 @@
-# kafka
+# Confluent Kafka Practice
+Contributor: @phungpx
+Technologies: Apache Kafka, FastAPI, Docker, Docker Compose
 
 ## Cleaner for Ubuntu Server
 
@@ -29,7 +31,7 @@ This will remove:
 sudo docker system prune -a
 ```
 
-## 1. Environment Setup
+## Environment Setup
 
 - Create virtual environment
 
