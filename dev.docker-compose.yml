@@ -27,28 +27,8 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_EXTERNAL:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      # KAFKA_TOPIC_PARTITIONS: 3
     networks:
       - kafka-net
-
-  # control-center:
-  #   image: confluentinc/cp-control-center
-  #   container_name: control-center
-  #   ports:
-  #     - "9021:9021"
-  #   restart: always
-  #   environment:
-  #     CONTROL_CENTER_BOOTSTRAP_SERVERS: kafka:9092
-  #     CONTROL_CENTER_REPLICATION_FACTOR: 1
-  #     PORT: 9021
-  #   depends_on:
-  #     - zookeeper
-  #     - kafka
-  #   volumes:
-  #     - /tmp/control-center/data:/var/lib/confluent-control-center
-  #     - /tmp/control-center/logs:/var/log/confluent-control-center
-  #   networks:
-  #     - kafka-net
 
   kafka-ui:
     container_name: kafka-ui
