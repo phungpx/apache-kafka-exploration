@@ -69,26 +69,26 @@ Body:
 }
 ```
 
-| Requested Body                      | Visualization                                                          |
-| ----------------------------------- | ---------------------------------------------------------------------- |
-| {value: string, partition: None}    | <img src="./figures/case-1-without-specific-parition.png" width="400"> |
-| {value: string, partition: int = 1} | <img src="./figures/case-1-with-specific-partition.png" width="400">   |
+| Requested Body                      | Visualization                                                                        |
+| ----------------------------------- | ------------------------------------------------------------------------------------ |
+| {value: string, partition: None}    | <img src="../../figures/practice1/case-1-without-specific-parition.png" width="400"> |
+| {value: string, partition: int = 1} | <img src="../../figures/practice1/case-1-with-specific-partition.png" width="400">   |
 
-| Send request (partition=None)                                 |
-| ------------------------------------------------------------- |
-| <img src="./figures/case-1-produce-messages.png" width="800"> |
+| Send request (partition=None)                                               |
+| --------------------------------------------------------------------------- |
+| <img src="../../figures/practice1/case-1-produce-messages.png" width="800"> |
 
-| Consume messages (partition=None)                             |
-| ------------------------------------------------------------- |
-| <img src="./figures/case-1-consume-messages.png" width="800"> |
+| Consume messages (partition=None)                                           |
+| --------------------------------------------------------------------------- |
+| <img src="../../figures/practice1/case-1-consume-messages.png" width="800"> |
 
-| Send request (partition=1)                                                |
-| ------------------------------------------------------------------------- |
-| <img src="./figures/case-1-produce-messages-partition-1.png" width="800"> |
+| Send request (partition=1)                                                              |
+| --------------------------------------------------------------------------------------- |
+| <img src="../../figures/practice1/case-1-produce-messages-partition-1.png" width="800"> |
 
 | Consume messages (partition=1, online consumed by consumer which belongs to partition 1) |
 | ---------------------------------------------------------------------------------------- |
-| <img src="./figures/case-1-consume-messages-partition-1.png" width="800">                |
+| <img src="../../figures/practice1/case-1-consume-messages-partition-1.png" width="800">  |
 
 ### 1.2 Case 1 - One consumer group (with two consumers) id and One producer (Production Mode)
 

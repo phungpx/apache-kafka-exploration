@@ -47,8 +47,8 @@ services:
   producer:
     container_name: producer
     build:
-      context: ./producer
-      dockerfile: Dockerfile
+      context: ../producer
+      dockerfile: ./Dockerfile
     restart: always
     depends_on:
       - kafka
@@ -65,7 +65,7 @@ services:
   consumer:
     container_name: consumer1
     build:
-      context: ./consumer
+      context: ../consumer
       dockerfile: ./Dockerfile
     restart: always
     depends_on:

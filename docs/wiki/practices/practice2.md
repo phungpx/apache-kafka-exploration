@@ -24,10 +24,10 @@ Body:
 }
 ```
 
-| Visualization (partition=None)                             |
-| ---------------------------------------------------------- |
-| <img src="./figures/case-2-visualization.png" width="800"> |
+| Visualization (partition=None)                                           |
+| ------------------------------------------------------------------------ |
+| <img src="../../figures/practice2/case-2-visualization.png" width="800"> |
 
-| Consume messages (partition=None)                             |
-| ------------------------------------------------------------- |
-| <img src="./figures/case-2-consume-messages.png" width="800"> |
+| Consume messages (partition=None)                                           |
+| --------------------------------------------------------------------------- |
+| <img src="../../figures/practice2/case-2-consume-messages.png" width="800"> |
