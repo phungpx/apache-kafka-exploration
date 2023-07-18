@@ -4,11 +4,9 @@ services:
   producer:
     container_name: producer
     build:
-      context: ./producer
-      dockerfile: Dockerfile
+      context: ../producer
+      dockerfile: ./Dockerfile
     restart: always
-    # depends_on:
-    #   - kafka
     ports:
       - "8081:8081"
     environment:
@@ -19,71 +17,83 @@ services:
     networks:
       -  confluent-kafka-practice_kafka-net
 
-  consumer1:
-    container_name: consumer1
+  consumer1-1:
+    container_name: consumer1-1
     build:
-      context: ./consumer
+      context: ../consumer
       dockerfile: ./Dockerfile
     restart: always
     depends_on:
-      # - kafka
       - producer
     environment:
       KAFKA_SERVERS: kafka:9092
       KAFKA_TOPIC: my-topic
       KAFKA_CONSUMER_GROUP_ID: my-consumer-group-1
-      SLEEP_TIME: 1
+      SLEEP_TIME: 0
     networks:
       -  confluent-kafka-practice_kafka-net
 
-  consumer2:
-    container_name: consumer2
+  consumer1-2:
+    container_name: consumer1-2
     build:
-      context: ./consumer
+      context: ../consumer
       dockerfile: ./Dockerfile
     restart: always
     depends_on:
-      # - kafka
       - producer
     environment:
       KAFKA_SERVERS: kafka:9092
       KAFKA_TOPIC: my-topic
       KAFKA_CONSUMER_GROUP_ID: my-consumer-group-1
-      SLEEP_TIME: 1
+      SLEEP_TIME: 0
     networks:
       -  confluent-kafka-practice_kafka-net
   
-  consumer3:
-    container_name: consumer3
+  consumer2-1:
+    container_name: consumer2-1
     build:
-      context: ./consumer
+      context: ../consumer
       dockerfile: ./Dockerfile
     restart: always
     depends_on:
-      # - kafka
       - producer
     environment:
       KAFKA_SERVERS: kafka:9092
       KAFKA_TOPIC: my-topic
-      KAFKA_CONSUMER_GROUP_ID: my-consumer-group-1
-      SLEEP_TIME: 1
+      KAFKA_CONSUMER_GROUP_ID: my-consumer-group-2
+      SLEEP_TIME: 0
     networks:
       -  confluent-kafka-practice_kafka-net
 
-  consumer4:
-    container_name: consumer4
+  consumer2-2:
+    container_name: consumer2-2
     build:
-      context: ./consumer
+      context: ../consumer
       dockerfile: ./Dockerfile
     restart: always
     depends_on:
-      # - kafka
       - producer
     environment:
       KAFKA_SERVERS: kafka:9092
       KAFKA_TOPIC: my-topic
       KAFKA_CONSUMER_GROUP_ID: my-consumer-group-2
       SLEEP_TIME: 5
+    networks:
+      -  confluent-kafka-practice_kafka-net
+
+  consumer3-1:
+    container_name: consumer3-1
+    build:
+      context: ../consumer
+      dockerfile: ./Dockerfile
+    restart: always
+    depends_on:
+      - producer
+    environment:
+      KAFKA_SERVERS: kafka:9092
+      KAFKA_TOPIC: my-topic
+      KAFKA_CONSUMER_GROUP_ID: my-consumer-group-3
+      SLEEP_TIME: 2
     networks:
       -  confluent-kafka-practice_kafka-net
 

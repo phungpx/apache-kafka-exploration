@@ -4,23 +4,23 @@ services:
   producer:
     container_name: producer
     build:
-      context: ./producer
-      dockerfile: Dockerfile
+      context: ../producer
+      dockerfile: ./Dockerfile
     restart: always
     ports:
       - "8081:8081"
     environment:
       KAFKA_SERVERS: kafka:9092
       KAFKA_TOPIC: my-topic
-      KAFKA_TOPIC_PARTITIONS: 2
+      KAFKA_TOPIC_PARTITIONS: 3
       KAFKA_REPLICATION_FACTOR: 1
     networks:
       - confluent-kafka-practice_kafka-net
 
-  consumer1:
-    container_name: consumer1
+  consumer1-1:
+    container_name: consumer1-1
     build:
-      context: ./consumer
+      context: ../consumer
       dockerfile: ./Dockerfile
     restart: always
     depends_on:
@@ -32,10 +32,40 @@ services:
     networks:
       - confluent-kafka-practice_kafka-net
 
-  consumer2:
-    container_name: consumer2
+  consumer1-2:
+    container_name: consumer1-2
     build:
-      context: ./consumer
+      context: ../consumer
+      dockerfile: ./Dockerfile
+    restart: always
+    depends_on:
+      - producer
+    environment:
+      KAFKA_SERVERS: kafka:9092
+      KAFKA_TOPIC: my-topic
+      KAFKA_CONSUMER_GROUP_ID: my-consumer-group-1
+    networks:
+      - confluent-kafka-practice_kafka-net
+
+  consumer1-3:
+    container_name: consumer1-3
+    build:
+      context: ../consumer
+      dockerfile: ./Dockerfile
+    restart: always
+    depends_on:
+      - producer
+    environment:
+      KAFKA_SERVERS: kafka:9092
+      KAFKA_TOPIC: my-topic
+      KAFKA_CONSUMER_GROUP_ID: my-consumer-group-1
+    networks:
+      - confluent-kafka-practice_kafka-net
+
+  consumer1-4:
+    container_name: consumer1-4
+    build:
+      context: ../consumer
       dockerfile: ./Dockerfile
     restart: always
     depends_on:

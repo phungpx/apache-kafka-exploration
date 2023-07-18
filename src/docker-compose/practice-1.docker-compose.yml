@@ -63,7 +63,7 @@ services:
       - kafka-net
 
   consumer:
-    container_name: consumer1
+    container_name: consumer
     build:
       context: ../consumer
       dockerfile: ./Dockerfile

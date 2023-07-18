@@ -11,4 +11,4 @@ class Config:
     KAFKA_CONSUMER_GROUP_ID = os.getenv("KAFKA_CONSUMER_GROUP_ID", "my-topic-group-1")
 
     # Timer
-    SLEEP_TIME = os.getenv("SLEEP_TIME", 5) #s
+    SLEEP_TIME = os.getenv("SLEEP_TIME", 0) #s
