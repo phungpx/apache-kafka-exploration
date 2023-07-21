@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  producer:
+    container_name: producer
+    build:
+      context: ../producer
+      dockerfile: ./Dockerfile
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      KAFKA_SERVERS: broker101:9091,broker102:9092,broker103:9093
+      KAFKA_TOPIC: topic-A
+      KAFKA_TOPIC_PARTITIONS: 2
+      KAFKA_REPLICATION_FACTOR: 2
+    networks:
+      -  docker-compose_kafka-net
+
+  consumer1-1:
+    container_name: consumer1-1
+    build:
+      context: ../consumer
+      dockerfile: ./Dockerfile
+    restart: always
+    depends_on:
+      - producer
+    environment:
+      KAFKA_SERVERS: broker101:9091,broker102:9092,broker103:9093
+      KAFKA_TOPIC: topic-A
+      KAFKA_CONSUMER_GROUP_ID: my-consumer-group-1
+      SLEEP_TIME: 0
+    networks:
+      -  docker-compose_kafka-net
+
+networks:
+  docker-compose_kafka-net:
+    external: true

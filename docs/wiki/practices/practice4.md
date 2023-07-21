@@ -1,4 +1,5 @@
-# Practice 3 - Brokers
+# Practice 4 - Brokers
+
 - This practice aims to dive deeper into some tough theory about [`broker`](../broker.md) and comprehend the mechanism of partitions distributed across all brokers as well as producing & consuming messages among consumer groups.
 - 3 brokers including Broker101, Broker102, Broker103
 - 2 Topics: Topic-A (3 Partitions) and Topic-B (2 partitions)
@@ -12,10 +13,10 @@
 
 ## Docker Compose Setup
 
-- Activate all crucial services with [dev.multiple-brokers.docker-compose.yml](../../../src/docker-compose/dev.multiple-brokers.docker-compose.yml)
+- Activate all crucial services with [dev.practice-4.docker-compose.yml](../../../src/docker-compose/dev.practice-4.docker-compose.yml)
 
 ```
-docker compose -f src/docker-compose/dev.multiple-brokers.docker-compose.yml up
+docker compose -f src/docker-compose/dev.practice-4.docker-compose.yml up
 ```
 
 - Run producer and consumers with [practice-4.docker-compose.yml](../../../src/docker-compose/practice-4.docker-compose.yml)
