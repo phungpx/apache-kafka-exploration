@@ -17,10 +17,10 @@
 docker compose -f src/docker-compose/dev.docker-compose.yml up
 ```
 
-- Run producer and consumers with [practice3.docker-compose.yml](../../../src/docker-compose/practice-3.docker-compose.yml)
+- Run producer and consumers with [practice-3.docker-compose.yml](../../../src/docker-compose/practice-3.docker-compose.yml)
 
 ```
-docker compose -f src/docker-compose/practice3.docker-compose.yml up
+docker compose -f src/docker-compose/practice-3.docker-compose.yml up
 ```
 
 - Logs all consumers before producing a ton of messages to all consumer groups by using `docker logs -f <container-name>`
@@ -36,8 +36,9 @@ URL: http://localhost:8081/send-message
 Method: POST
 Body:
     {
-        "value": "testing-value"  (message being produced to consumers)
-        // "partition": None  (specify partition receiving produced messages)
+        "topic": "my-topic",
+        "value": "testing-value"  # message being produced to consumers
+        // "partition": None  # specify partition receiving produced messages
     }
 ```
 

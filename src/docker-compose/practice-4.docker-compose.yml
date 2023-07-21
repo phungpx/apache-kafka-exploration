@@ -1,0 +1,118 @@
+version: '3.8'
+
+services:
+  producer:
+    container_name: producer
+    build:
+      context: ../producer
+      dockerfile: ./Dockerfile
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      KAFKA_SERVERS: broker101:9091,broker102:9092,broker103:9093
+      KAFKA_TOPIC: topic-A,topic-B
+      KAFKA_TOPIC_PARTITIONS: 3,2
+      KAFKA_REPLICATION_FACTOR: 1,1
+    networks:
+      -  docker-compose_kafka-net
+
+  consumer1-1:
+    container_name: consumer1-1
+    build:
+      context: ../consumer
+      dockerfile: ./Dockerfile
+    restart: always
+    depends_on:
+      - producer
+    environment:
+      KAFKA_SERVERS: broker101:9091,broker102:9092,broker103:9093
+      KAFKA_TOPIC: topic-B
+      KAFKA_CONSUMER_GROUP_ID: my-consumer-group-1
+      SLEEP_TIME: 0
+    networks:
+      -  docker-compose_kafka-net
+
+  consumer1-2:
+    container_name: consumer1-2
+    build:
+      context: ../consumer
+      dockerfile: ./Dockerfile
+    restart: always
+    depends_on:
+      - producer
+    environment:
+      KAFKA_SERVERS: broker101:9091,broker102:9092,broker103:9093
+      KAFKA_TOPIC: topic-B
+      KAFKA_CONSUMER_GROUP_ID: my-consumer-group-1
+      SLEEP_TIME: 0
+    networks:
+      -  docker-compose_kafka-net
+  
+  consumer2-1:
+    container_name: consumer2-1
+    build:
+      context: ../consumer
+      dockerfile: ./Dockerfile
+    restart: always
+    depends_on:
+      - producer
+    environment:
+      KAFKA_SERVERS: broker101:9091,broker102:9092,broker103:9093
+      KAFKA_TOPIC: topic-A
+      KAFKA_CONSUMER_GROUP_ID: my-consumer-group-2
+      SLEEP_TIME: 0
+    networks:
+      -  docker-compose_kafka-net
+
+  consumer2-2:
+    container_name: consumer2-2
+    build:
+      context: ../consumer
+      dockerfile: ./Dockerfile
+    restart: always
+    depends_on:
+      - producer
+    environment:
+      KAFKA_SERVERS: broker101:9091,broker102:9092,broker103:9093
+      KAFKA_TOPIC: topic-A
+      KAFKA_CONSUMER_GROUP_ID: my-consumer-group-2
+      SLEEP_TIME: 5
+    networks:
+      -  docker-compose_kafka-net
+
+  consumer2-3:
+    container_name: consumer2-3
+    build:
+      context: ../consumer
+      dockerfile: ./Dockerfile
+    restart: always
+    depends_on:
+      - producer
+    environment:
+      KAFKA_SERVERS: broker101:9091,broker102:9092,broker103:9093
+      KAFKA_TOPIC: topic-A
+      KAFKA_CONSUMER_GROUP_ID: my-consumer-group-2
+      SLEEP_TIME: 5
+    networks:
+      -  docker-compose_kafka-net
+
+  consumer3-1:
+    container_name: consumer3-1
+    build:
+      context: ../consumer
+      dockerfile: ./Dockerfile
+    restart: always
+    depends_on:
+      - producer
+    environment:
+      KAFKA_SERVERS: broker101:9091,broker102:9092,broker103:9093
+      KAFKA_TOPIC: topic-A,topic-B
+      KAFKA_CONSUMER_GROUP_ID: my-consumer-group-3
+      SLEEP_TIME: 2
+    networks:
+      -  docker-compose_kafka-net
+
+networks:
+  docker-compose_kafka-net:
+    external: true

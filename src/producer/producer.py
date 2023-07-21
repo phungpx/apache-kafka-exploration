@@ -26,6 +26,7 @@ def acked(err, msg):
 async def startup_event():
     global logger
     global producer, admin_client
+    global setting_topics
 
     # Logger Initialization
     logger = Logger(log_dir=Config.LOG_FOLDER, log_name=Config.LOG_NAME, logging_level='INFO')
@@ -67,11 +68,18 @@ def shutdown_event():
 @app.post("/send-message")
 async def send_message(message: MessageDto):
     try:
+        if message.topic not in setting_topics:
+            return JSONResponse({
+                "statusMessage" : "Topic not found!",
+                "statusCode" : status.HTTP_404_NOT_FOUND,
+                "errorMessage": f"Topic {message.topic} not found.",
+            })
+
         record_key: bytes = StringSerializer()(message.key)  # <=> encode('utf-8')
         record_value: bytes = StringSerializer()(message.value)  # <=> encode('utf-8')
         if message.partition is not None:
             producer.produce(
-                topic=Config.KAFKA_TOPIC,
+                topic=message.topic,
                 key=record_key,
                 value=record_value,
                 partition=message.partition,
@@ -79,7 +87,7 @@ async def send_message(message: MessageDto):
             )
         else:
             producer.produce(
-                topic=Config.KAFKA_TOPIC,
+                topic=message.topic,
                 key=record_key,
                 value=record_value,
                 on_delivery=acked,
