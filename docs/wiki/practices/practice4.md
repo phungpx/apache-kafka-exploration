@@ -1,5 +1,5 @@
 # Practice 3 - Brokers
-
+- This practice aims to dive deeper into some tough theory about [`broker`](../broker.md) and comprehend the mechanism of partitions distributed across all brokers as well as producing & consuming messages among consumer groups.
 - 3 brokers including Broker101, Broker102, Broker103
 - 2 Topics: Topic-A (3 Partitions) and Topic-B (2 partitions)
 
@@ -7,7 +7,7 @@
 | :-------------------------------------------------------------------------: |
 |                                 _Figure 1._                                 |
 
-- All produced messages will be broadcasted to all consumer groups and ensure each consumer groups will consume all produced messages.
+- All produced messages will be broadcasted to all consumer groups and ensure each consumer groups will consume all produced messages of corresponding topic.
 - And each consumer groups, the mechanism of consuming messages is similar to [practice 2](./practice2.md)
 
 ## Docker Compose Setup
