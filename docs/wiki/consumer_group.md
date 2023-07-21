@@ -63,5 +63,3 @@ consumer = Consumer({
   - `Exactly once`
     - For kafka => kafka workflow: use the Transactional API (easy with Kafka Streams API).
     - For kafka => External System workflows: use an idempotent consumer.
-
-## 5. Practices

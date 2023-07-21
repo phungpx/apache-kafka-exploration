@@ -23,6 +23,12 @@ docker compose -f src/docker-compose/dev.docker-compose.yml up
 docker compose -f src/docker-compose/practice3.docker-compose.yml up
 ```
 
+- Logs all consumers before producing a ton of messages to all consumer groups by using `docker logs -f <container-name>`
+
+| ![alt text](../../figures/practice3/practice-3-logs-before.png?raw=true) |
+| :----------------------------------------------------------------------: |
+|              _Figure 2: Logs of multiple Consumer Groups._               |
+
 - Produce messages (with/without specific partition) through endpoint `/send-message` to examine all scenarios which I've discussed above.
 
 ```
@@ -34,3 +40,9 @@ Body:
         // "partition": None  (specify partition receiving produced messages)
     }
 ```
+
+- Logs all consumers after producing a ton of messages to all consumer groups by using `docker logs -f <container-name>`
+
+| ![alt text](../../figures/practice3/practice-3-logs-after.png?raw=true) |
+| :---------------------------------------------------------------------: |
+|              _Figure 3: Logs of multiple Consumer Groups._              |
