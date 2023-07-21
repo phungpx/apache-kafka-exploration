@@ -12,9 +12,9 @@
 
 - If you have more consumers than partitions, some consumers will be INACTIVE. (=> num_partitions >= num_consumers in the same group)
 
-| ![alt text](../figures/consumer_group/consumer-group-example.png?raw=true) |
-| :------------------------------------------------------------------------: |
-|   _Figure 2: An example of an inactivate consumer in a consumer group._    |
+| ![alt text](../figures/consumer_group/consumers-greater-than-partitions.png?raw=true) |
+| :-----------------------------------------------------------------------------------: |
+|         _Figure 2: An example of an inactivate consumer in a consumer group._         |
 
 ## 2. Multiple Consumer Groups in one topic?
 
@@ -31,9 +31,9 @@ consumer = Consumer({
 })
 ```
 
-| ![alt text](../figures/consumer_group/consumer-group-example.png?raw=true) |
-| :------------------------------------------------------------------------: |
-|            _Figure 3: An example of multiple Consumer Groups._             |
+| ![alt text](../figures/consumer_group/multiple-consumers-in-a-group.png?raw=true) |
+| :-------------------------------------------------------------------------------: |
+|                _Figure 3: An example of multiple Consumer Groups._                |
 
 ## 3. Consumer Offsets
 
@@ -43,9 +43,9 @@ consumer = Consumer({
 
 - When `a consumer in a group` has processed data received from Kafka, it should be `periodically committing the offsets` (the kafka broker will write to `__consumer_offsets`, not the group itself).
 
-|  ![alt text](../figures/consumer_group/consumer-group-example.png?raw=true)  |
+<!-- |  ![alt text](../figures/consumer_group/consumer-group-example.png?raw=true)  |
 | :--------------------------------------------------------------------------: |
-| _Figure 4: An example of Committing offsets and reads messages from broker._ |
+| _Figure 4: An example of Committing offsets and reads messages from broker._ | -->
 
 - If a consumer dies, it will be able to read back from where it left off thanks to the committed consumer offsets!.
 
