@@ -1,4 +1,4 @@
-# Practice 3 - Brokers
+# Practice 4 - Brokers
 
 - This practice aims to dive deeper into some tough theory about [`broker`](../broker.md) and comprehend the mechanism of partitions distributed across all brokers as well as producing & consuming messages among consumer groups.
 - 3 brokers including Broker101, Broker102, Broker103
