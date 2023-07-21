@@ -37,23 +37,25 @@ async def startup_event():
 
     # Topic Creation
     available_topics = admin_client.list_topics().topics
-    if Config.KAFKA_TOPIC not in available_topics:
-        new_topic = NewTopic(
-            topic=Config.KAFKA_TOPIC,
-            num_partitions=int(Config.KAFKA_TOPIC_PARTITIONS),
-            replication_factor=int(Config.KAFKA_REPLICATION_FACTOR)
-        )
-        created_topic_infos = admin_client.create_topics([new_topic])
-        for topic, info in created_topic_infos.items():
-            try:
-                info.result()  # The result itself is None
-                logger.logInfo(f"Topic {topic} created.")
-            except Exception as e:
-                logger.logError(f"Failed to create topic {topic}: {e}.")
-    else:
-        topic_info = available_topics[Config.KAFKA_TOPIC]
-        logger.logInfo(f"Topic {topic_info} with {len(topic_info.partitions)} partitions already created")
-        # TODO: check and compare all available settings
+    setting_topics = Config.KAFKA_TOPIC.split(',')
+    setting_partitions = Config.KAFKA_TOPIC_PARTITIONS.split(',')
+    setting_replication_factors = Config.KAFKA_REPLICATION_FACTOR.split(',')
+    for (topic, partition, replication_factor) in zip(setting_topics, setting_partitions, setting_replication_factors):
+        if Config.KAFKA_TOPIC not in available_topics:
+            new_topic = NewTopic(
+                topic=topic, num_partitions=int(partition), replication_factor=int(replication_factor)
+            )
+            created_topic_infos = admin_client.create_topics([new_topic])
+            for topic, info in created_topic_infos.items():
+                try:
+                    info.result()  # The result itself is None
+                    logger.logInfo(f"Topic {topic} created.")
+                except Exception as e:
+                    logger.logError(f"Failed to create topic {topic}: {e}.")
+        else:
+            topic_info = available_topics[Config.KAFKA_TOPIC]
+            logger.logInfo(f"Topic {topic_info} with {len(topic_info.partitions)} partitions already created")
+            # TODO: check and compare all available settings
 
 
 @app.on_event("shutdown")

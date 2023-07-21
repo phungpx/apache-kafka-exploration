@@ -19,7 +19,8 @@ consumer = Consumer({
 })
 
 # Kafka Consumer subsribes to created topics
-consumer.subscribe([Config.KAFKA_TOPIC])
+topics = Config.KAFKA_TOPIC.split(',')
+consumer.subscribe(topics)
 
 while True:
     try:
