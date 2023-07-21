@@ -102,7 +102,8 @@ url: http://localhost:8081/send-message
 Method: POST
 Body:
     {
-        "value": "hello-world" (message being produced to consumers)
-        // "partition": None (specify partition receiving produced messages)
+        "topic": "my-topic",
+        "value": "hello-world"  # message being produced to consumers
+        // "partition": None  # specify partition receiving produced messages
     }
 ```
