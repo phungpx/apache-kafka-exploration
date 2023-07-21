@@ -19,7 +19,7 @@ class Logger:
         formatter = logging.Formatter('%(asctime)s - %(levelname)s: %(message)s', datefmt='%m/%d/%Y %I:%M:%S%p')
         file_handler = logging.FileHandler(str(log_dir.joinpath(f'{log_name}.log')))
         file_handler.setFormatter(formatter)
-        stream_handler = logging.StreamHandler()  # if we want to print to consol
+        stream_handler = logging.StreamHandler()  # if we want to print to console
         stream_handler.setFormatter(formatter)
         self.logger.addHandler(file_handler)
         self.logger.addHandler(stream_handler)

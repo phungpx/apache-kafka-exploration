@@ -15,7 +15,7 @@ services:
       KAFKA_TOPIC_PARTITIONS: 3
       KAFKA_REPLICATION_FACTOR: 1
     networks:
-      -  confluent-kafka-practice_kafka-net
+      -  docker-compose_kafka-net
 
   consumer1-1:
     container_name: consumer1-1
@@ -31,7 +31,7 @@ services:
       KAFKA_CONSUMER_GROUP_ID: my-consumer-group-1
       SLEEP_TIME: 0
     networks:
-      -  confluent-kafka-practice_kafka-net
+      -  docker-compose_kafka-net
 
   consumer1-2:
     container_name: consumer1-2
@@ -47,7 +47,7 @@ services:
       KAFKA_CONSUMER_GROUP_ID: my-consumer-group-1
       SLEEP_TIME: 0
     networks:
-      -  confluent-kafka-practice_kafka-net
+      -  docker-compose_kafka-net
   
   consumer2-1:
     container_name: consumer2-1
@@ -63,7 +63,7 @@ services:
       KAFKA_CONSUMER_GROUP_ID: my-consumer-group-2
       SLEEP_TIME: 0
     networks:
-      -  confluent-kafka-practice_kafka-net
+      -  docker-compose_kafka-net
 
   consumer2-2:
     container_name: consumer2-2
@@ -79,7 +79,23 @@ services:
       KAFKA_CONSUMER_GROUP_ID: my-consumer-group-2
       SLEEP_TIME: 5
     networks:
-      -  confluent-kafka-practice_kafka-net
+      -  docker-compose_kafka-net
+
+  consumer2-3:
+    container_name: consumer2-3
+    build:
+      context: ../consumer
+      dockerfile: ./Dockerfile
+    restart: always
+    depends_on:
+      - producer
+    environment:
+      KAFKA_SERVERS: kafka:9092
+      KAFKA_TOPIC: my-topic
+      KAFKA_CONSUMER_GROUP_ID: my-consumer-group-2
+      SLEEP_TIME: 5
+    networks:
+      -  docker-compose_kafka-net
 
   consumer3-1:
     container_name: consumer3-1
@@ -95,8 +111,8 @@ services:
       KAFKA_CONSUMER_GROUP_ID: my-consumer-group-3
       SLEEP_TIME: 2
     networks:
-      -  confluent-kafka-practice_kafka-net
+      -  docker-compose_kafka-net
 
 networks:
-  confluent-kafka-practice_kafka-net:
+  docker-compose_kafka-net:
     external: true

@@ -10,7 +10,7 @@ services:
     ports:
       - 22181:2181
     networks:
-      - kafka-net
+      - docker-compose_kafka-net
 
   kafka:
     image: confluentinc/cp-kafka:7.4.0
@@ -28,7 +28,7 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     networks:
-      - kafka-net
+      - docker-compose_kafka-net
 
   kafka-ui:
     container_name: kafka-ui
@@ -42,7 +42,7 @@ services:
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
       DYNAMIC_CONFIG_ENABLED: "true"
     networks:
-      - kafka-net
+      - docker-compose_kafka-net
 
   producer:
     container_name: producer
@@ -60,7 +60,7 @@ services:
       KAFKA_TOPIC_PARTITIONS: 1
       KAFKA_REPLICATION_FACTOR: 1
     networks:
-      - kafka-net
+      - docker-compose_kafka-net
 
   consumer:
     container_name: consumer
@@ -76,8 +76,8 @@ services:
       KAFKA_TOPIC: my-topic
       KAFKA_CONSUMER_GROUP_ID: my-consumer-group-1
     networks:
-      - kafka-net
+      - docker-compose_kafka-net
 
 networks:
-  kafka-net:
+  docker-compose_kafka-net:
     driver: bridge

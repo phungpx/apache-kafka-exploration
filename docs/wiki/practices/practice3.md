@@ -14,13 +14,13 @@
 - Activate all crucial services with [dev.docker-compose.yml](../../../src/docker-compose/dev.docker-compose.yml)
 
 ```
-docker compose -f dev.docker-compose.yml up
+docker compose -f src/docker-compose/dev.docker-compose.yml up
 ```
 
 - Run producer and consumers with [practice3.docker-compose.yml](../../../src/docker-compose/practice-3.docker-compose.yml)
 
 ```
-docker compose -f practice3.docker-compose.yml up
+docker compose -f src/docker-compose/practice3.docker-compose.yml up
 ```
 
 - Produce messages (with/without specific partition) through endpoint `/send-message` to examine all scenarios which I've discussed above.
