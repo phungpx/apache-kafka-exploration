@@ -1,16 +1,34 @@
-# Practice 2
+# Consumer Groups
+
+- All the consumers in an application read data as a consumer group.
+
+- Each consumer within a group reads from exclusive partitions.
+
+| ![alt text](../../figures/consumer_group/consumer-group-example.png?raw=true) |
+| :---------------------------------------------------------------------------: |
+|                   _Figure 1: An example of Consumer Group._                   |
+
+## 1. What if too many consumers?
+
+- If you have more consumers than partitions, some consumers will be INACTIVE. (=> num_partitions >= num_consumers in the same group)
+
+| ![alt text](../../figures/consumer_group/consumers-greater-than-partitions.png?raw=true) |
+| :--------------------------------------------------------------------------------------: |
+|          _Figure 2: An example of an inactivate consumer in a consumer group._           |
+
+## 2. Practice 2
 
 - Having one consumer group containing 4 consumers and one broker with 3 partitions.
 
 | ![alt text](../../figures/consumer_group/consumers-greater-than-partitions.png?raw=true) |
 | :--------------------------------------------------------------------------------------: |
-|          _Figure 1: An example of an inactivate consumer in a consumer group._           |
+|          _Figure 3: An example of an inactivate consumer in a consumer group._           |
 
 - If I produce a message with `key=None` (do not indicate a specific partition), one of consumers in this consumer group will be inactive. Therefore, we must be set the number of partitions greater than or equal the number of consumers in a consumer group.
 
 - If I produce a message with a specific key to determine what partition receiving messages from producer, just only one consumer will be consume all these messages in that parititon. This leads to some drawbacks for your application in terms of throughput, latency, and cost.
 
-## Docker compose setup
+### Docker compose setup
 
 - Run multiple docker compose files (https://stackoverflow.com/questions/62871280/should-i-have-multiple-docker-compose-files)
 
@@ -40,7 +58,7 @@ Body:
     }
 ```
 
-## Terminal Setup
+### Terminal Setup
 
 - Acitvate all crucial services including kafka, kafka-ui, zookeeper
 
