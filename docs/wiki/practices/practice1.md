@@ -3,7 +3,7 @@
 - Run all services
 
 ```
-docker compose -f src/docker-compose/practice1.docker-compose.yml up
+docker compose -f src/docker-compose/practice-1.docker-compose.yml up
 ```
 
 - Produce messages through endpoint `/send-message`
