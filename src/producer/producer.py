@@ -1,3 +1,4 @@
+import uuid
 from fastapi import FastAPI, status
 from confluent_kafka import Producer
 from starlette.responses import JSONResponse
@@ -11,6 +12,11 @@ from dto import MessageDto
 
 # FastAPI Application
 app = FastAPI()
+
+
+# ID Generation
+def fake_id() -> str:
+    return str(uuid.uuid4())
 
 
 def acked(err, msg):
@@ -34,7 +40,10 @@ async def startup_event():
 
     # Admin Client and Producer Initialization
     admin_client = AdminClient({'bootstrap.servers': Config.KAFKA_SERVERS})
-    producer = Producer({'bootstrap.servers': Config.KAFKA_SERVERS})
+    producer = Producer({
+        'bootstrap.servers': Config.KAFKA_SERVERS,
+        'batch.size': int(Config.KAFKA_BATCH_SIZE),
+    })
 
     # Topic Creation
     available_topics = admin_client.list_topics().topics
@@ -75,7 +84,8 @@ async def send_message(message: MessageDto):
                 "errorMessage": f"Topic {message.topic} not found.",
             })
 
-        record_key: bytes = StringSerializer()(message.key)  # <=> encode('utf-8')
+        message_key = fake_id() if Config.MESSAGE_KEYS_RANDOM else message.key
+        record_key: bytes = StringSerializer()(message_key)  # <=> encode('utf-8')
         record_value: bytes = StringSerializer()(message.value)  # <=> encode('utf-8')
         if message.partition is not None:
             producer.produce(

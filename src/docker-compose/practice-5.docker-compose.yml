@@ -14,6 +14,7 @@ services:
       KAFKA_TOPIC: topic-A
       KAFKA_TOPIC_PARTITIONS: 2
       KAFKA_REPLICATION_FACTOR: 2
+      MESSAGE_KEYS_RANDOM: "true"
     networks:
       -  docker-compose_kafka-net
 

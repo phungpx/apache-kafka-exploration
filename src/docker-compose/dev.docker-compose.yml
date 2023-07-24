@@ -5,8 +5,8 @@ services:
     image: confluentinc/cp-zookeeper:latest
     container_name: zookeeper
     environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
+      ZOOKEEPER_CLIENT_PORT: 2181  # The port number used for clients to connect to ZooKeeper.
+      ZOOKEEPER_TICK_TIME: 2000  #  The length of a single tick in milliseconds. This is the basic unit of time used by ZooKeeper for session timeouts and heartbeats.
     ports:
       - 22181:2181
     networks:
