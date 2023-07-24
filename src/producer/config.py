@@ -21,6 +21,7 @@ class Config:
     KAFKA_TOPIC_PARTITIONS = os.getenv("KAFKA_TOPIC_PARTITIONS", 3)
     KAFKA_REPLICATION_FACTOR = os.getenv("KAFKA_REPLICATION_FACTOR", 1)
     KAFKA_BATCH_SIZE = os.getenv("KAFKA_BATCH_SIZE", 16384)  # https://docs.confluent.io/platform/current/installation/configuration/producer-configs.html#batch-size
+    KAFKA_LINGER_MS = os.getenv("KAFKA_LINGER_MS", 0)  # https://docs.confluent.io/platform/current/installation/configuration/producer-configs.html#linger-ms
 
     # Set message keys
     MESSAGE_KEYS_RANDOM = str2bool(os.getenv("MESSAGE_KEYS_RANDOM", "false"))

@@ -43,6 +43,7 @@ async def startup_event():
     producer = Producer({
         'bootstrap.servers': Config.KAFKA_SERVERS,
         'batch.size': int(Config.KAFKA_BATCH_SIZE),
+        'linger.ms': int(Config.KAFKA_LINGER_MS),
     })
 
     # Topic Creation
