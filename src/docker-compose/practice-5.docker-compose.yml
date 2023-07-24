@@ -10,10 +10,12 @@ services:
     ports:
       - "8081:8081"
     environment:
-      KAFKA_SERVERS: broker101:9091,broker102:9092,broker103:9093
+      # KAFKA_SERVERS: broker101:9091,broker102:9092,broker103:9093
+      KAFKA_SERVERS: broker101:9091
       KAFKA_TOPIC: topic-A
       KAFKA_TOPIC_PARTITIONS: 2
       KAFKA_REPLICATION_FACTOR: 2
+      MESSAGE_KEYS_RANDOM: "true"
     networks:
       -  docker-compose_kafka-net
 
@@ -26,7 +28,8 @@ services:
     depends_on:
       - producer
     environment:
-      KAFKA_SERVERS: broker101:9091,broker102:9092,broker103:9093
+      # KAFKA_SERVERS: broker101:9091,broker102:9092,broker103:9093
+      KAFKA_SERVERS: broker101:9091
       KAFKA_TOPIC: topic-A
       KAFKA_CONSUMER_GROUP_ID: my-consumer-group-1
       SLEEP_TIME: 0
