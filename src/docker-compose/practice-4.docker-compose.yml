@@ -10,7 +10,8 @@ services:
     ports:
       - "8081:8081"
     environment:
-      KAFKA_SERVERS: broker101:9091,broker102:9092,broker103:9093
+      # KAFKA_SERVERS: broker101:9091,broker102:9092,broker103:9093
+      KAFKA_SERVERS: broker101:9091
       KAFKA_TOPIC: topic-A,topic-B
       KAFKA_TOPIC_PARTITIONS: 3,2
       KAFKA_REPLICATION_FACTOR: 1,1
@@ -27,7 +28,8 @@ services:
     depends_on:
       - producer
     environment:
-      KAFKA_SERVERS: broker101:9091,broker102:9092,broker103:9093
+      # KAFKA_SERVERS: broker101:9091,broker102:9092,broker103:9093
+      KAFKA_SERVERS: broker101:9091
       KAFKA_TOPIC: topic-B
       KAFKA_CONSUMER_GROUP_ID: my-consumer-group-1
       SLEEP_TIME: 0
@@ -43,7 +45,8 @@ services:
     depends_on:
       - producer
     environment:
-      KAFKA_SERVERS: broker101:9091,broker102:9092,broker103:9093
+      # KAFKA_SERVERS: broker101:9091,broker102:9092,broker103:9093
+      KAFKA_SERVERS: broker101:9091
       KAFKA_TOPIC: topic-B
       KAFKA_CONSUMER_GROUP_ID: my-consumer-group-1
       SLEEP_TIME: 0
@@ -59,7 +62,8 @@ services:
     depends_on:
       - producer
     environment:
-      KAFKA_SERVERS: broker101:9091,broker102:9092,broker103:9093
+      # KAFKA_SERVERS: broker101:9091,broker102:9092,broker103:9093
+      KAFKA_SERVERS: broker101:9091
       KAFKA_TOPIC: topic-A
       KAFKA_CONSUMER_GROUP_ID: my-consumer-group-2
       SLEEP_TIME: 0
@@ -75,7 +79,8 @@ services:
     depends_on:
       - producer
     environment:
-      KAFKA_SERVERS: broker101:9091,broker102:9092,broker103:9093
+      # KAFKA_SERVERS: broker101:9091,broker102:9092,broker103:9093
+      KAFKA_SERVERS: broker101:9091
       KAFKA_TOPIC: topic-A
       KAFKA_CONSUMER_GROUP_ID: my-consumer-group-2
       SLEEP_TIME: 5
@@ -91,7 +96,8 @@ services:
     depends_on:
       - producer
     environment:
-      KAFKA_SERVERS: broker101:9091,broker102:9092,broker103:9093
+      # KAFKA_SERVERS: broker101:9091,broker102:9092,broker103:9093
+      KAFKA_SERVERS: broker101:9091
       KAFKA_TOPIC: topic-A
       KAFKA_CONSUMER_GROUP_ID: my-consumer-group-2
       SLEEP_TIME: 5
@@ -107,7 +113,8 @@ services:
     depends_on:
       - producer
     environment:
-      KAFKA_SERVERS: broker101:9091,broker102:9092,broker103:9093
+      # KAFKA_SERVERS: broker101:9091,broker102:9092,broker103:9093
+      KAFKA_SERVERS: broker101:9091
       KAFKA_TOPIC: topic-A,topic-B
       KAFKA_CONSUMER_GROUP_ID: my-consumer-group-3
       SLEEP_TIME: 2
