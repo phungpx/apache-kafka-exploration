@@ -1,4 +1,5 @@
 import uuid
+from typing import List
 from fastapi import FastAPI, status
 from confluent_kafka import Producer
 from starlette.responses import JSONResponse
@@ -32,7 +33,6 @@ def acked(err, msg):
 async def startup_event():
     global logger
     global producer, admin_client
-    global setting_topics
 
     # Logger Initialization
     logger = Logger(log_dir=Config.LOG_FOLDER, log_name=Config.LOG_NAME, logging_level='INFO')
@@ -42,31 +42,52 @@ async def startup_event():
     admin_client = AdminClient({'bootstrap.servers': Config.KAFKA_SERVERS})
     producer = Producer({
         'bootstrap.servers': Config.KAFKA_SERVERS,
-        'batch.size': int(Config.KAFKA_BATCH_SIZE),
-        'linger.ms': int(Config.KAFKA_LINGER_MS),
+        # 'batch.size': int(Config.KAFKA_BATCH_SIZE),
+        # 'linger.ms': int(Config.KAFKA_LINGER_MS),
     })
 
     # Topic Creation
     available_topics = admin_client.list_topics().topics
-    setting_topics = Config.KAFKA_TOPIC.split(',')
-    setting_partitions = Config.KAFKA_TOPIC_PARTITIONS.split(',')
-    setting_replication_factors = Config.KAFKA_REPLICATION_FACTOR.split(',')
+    setting_topics: List[str] = Config.KAFKA_TOPIC.split(',')
+    setting_partitions: List[int] = [int(partitions) for partitions in Config.KAFKA_TOPIC_PARTITIONS.split(',')]
+    setting_replication_factors: List[int] = [int(factor) for factor in Config.KAFKA_REPLICATION_FACTORS.split(',')]
+
+    new_topics = []
+
     for (topic, partition, replication_factor) in zip(setting_topics, setting_partitions, setting_replication_factors):
-        if Config.KAFKA_TOPIC not in available_topics:
-            new_topic = NewTopic(
-                topic=topic, num_partitions=int(partition), replication_factor=int(replication_factor)
-            )
-            created_topic_infos = admin_client.create_topics([new_topic])
-            for topic, info in created_topic_infos.items():
-                try:
-                    info.result()  # The result itself is None
-                    logger.logInfo(f"Topic {topic} created.")
-                except Exception as e:
-                    logger.logError(f"Failed to create topic {topic}: {e}.")
+        if topic in available_topics:
+            topic_info = available_topics[topic]
+            partition_count = len(topic_info.partitions)
+            replication_factor_count = len(topic_info.partitions[0].replicas)
+            print(f'Topic: {topic} already created.')
+            print(f'\tCurrent Partitions: {partition_count}')
+            print(f'\tCurrent Replication Factor: {replication_factor_count}')
+            for idx, info in topic_info.partitions.items():
+                print(f"\tPartition: {idx}, Replicas: {len(info.replicas)}, Belong to: {', '.join(['broker' + str(broker_id) for broker_id in info.replicas])}")
+
+            # if (partition_count != partition) or (replication_factor_count != replication_factor):
+            #     # Returns a dict of <topic,future>.
+            #     fs = admin_client.delete_topics([topic], operation_timeout=1)
+
+            #     # Wait for operation to finish.
+            #     for topic, f in fs.items():
+            #         try:
+            #             f.result()  # The result itself is None
+            #             logger.logInfo("Topic {} deleted".format(topic))
+            #             new_topics.append(NewTopic(topic=topic, num_partitions=partition, replication_factor=replication_factor))
+            #         except Exception as e:
+            #             logger.logError("Failed to delete topic {}: {}".format(topic, e))
         else:
-            topic_info = available_topics[Config.KAFKA_TOPIC]
-            logger.logInfo(f"Topic {topic_info} with {len(topic_info.partitions)} partitions already created")
-            # TODO: check and compare all available settings
+            new_topics.append(NewTopic(topic=topic, num_partitions=partition, replication_factor=replication_factor))
+
+    if len(new_topics):
+        created_topic_infos = admin_client.create_topics(new_topics)
+        for topic, info in created_topic_infos.items():
+            try:
+                info.result()  # The result itself is None
+                logger.logInfo(f"Topic {topic} created.")
+            except Exception as e:
+                logger.logError(f"Failed to create topic {topic}: {e}.")
 
 
 @app.on_event("shutdown")
@@ -78,7 +99,7 @@ def shutdown_event():
 @app.post("/send-message")
 async def send_message(message: MessageDto):
     try:
-        if message.topic not in setting_topics:
+        if message.topic not in admin_client.list_topics().topics:
             return JSONResponse({
                 "statusMessage" : "Topic not found!",
                 "statusCode" : status.HTTP_404_NOT_FOUND,
@@ -88,21 +109,13 @@ async def send_message(message: MessageDto):
         message_key = fake_id() if Config.MESSAGE_KEYS_RANDOM else message.key
         record_key: bytes = StringSerializer()(message_key)  # <=> encode('utf-8')
         record_value: bytes = StringSerializer()(message.value)  # <=> encode('utf-8')
-        if message.partition is not None:
-            producer.produce(
-                topic=message.topic,
-                key=record_key,
-                value=record_value,
-                partition=message.partition,
-                on_delivery=acked,
-            )
-        else:
-            producer.produce(
-                topic=message.topic,
-                key=record_key,
-                value=record_value,
-                on_delivery=acked,
-            )
+        producer.produce(
+            topic=message.topic,
+            key=record_key,
+            value=record_value,
+            partition=message.partition,
+            on_delivery=acked,
+        )
         producer.poll(0)
         logger.logInfo(f'Produced message: key={record_key}, value={record_value}.')
         return JSONResponse({

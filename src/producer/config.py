@@ -18,8 +18,8 @@ class Config:
     # Kafka Producer Setting
     KAFKA_SERVERS = os.getenv("KAFKA_SERVERS", "localhost:29092")
     KAFKA_TOPIC = os.getenv("KAFKA_TOPIC", "my-topic")
-    KAFKA_TOPIC_PARTITIONS = os.getenv("KAFKA_TOPIC_PARTITIONS", 3)
-    KAFKA_REPLICATION_FACTOR = os.getenv("KAFKA_REPLICATION_FACTOR", 1)
+    KAFKA_TOPIC_PARTITIONS = os.getenv("KAFKA_TOPIC_PARTITIONS", "3")
+    KAFKA_REPLICATION_FACTORS = os.getenv("KAFKA_REPLICATION_FACTORS", "1")
     KAFKA_BATCH_SIZE = os.getenv("KAFKA_BATCH_SIZE", 16384)  # https://docs.confluent.io/platform/current/installation/configuration/producer-configs.html#batch-size
     KAFKA_LINGER_MS = os.getenv("KAFKA_LINGER_MS", 0)  # https://docs.confluent.io/platform/current/installation/configuration/producer-configs.html#linger-ms
 
