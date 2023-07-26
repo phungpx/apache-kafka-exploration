@@ -6,4 +6,4 @@ class MessageDto(BaseModel):
     topic: str
     key: Optional[str] = None
     value: Optional[str] = None
-    partition: Optional[int] = None
+    partition: int = -1
